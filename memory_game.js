@@ -9,6 +9,7 @@ let lockBoard = false
 function flipCard() {
     if(lockBoard) return
     this.classList.toggle("flip")
+    if(this === firstCard) return
     console.log("i was clicked")
     console.log(this)
 
@@ -16,15 +17,15 @@ function flipCard() {
         hasFlippedCard = true
         firstCard = this
 
-        // console.log({hasFlippedCard, firstCard})
+        console.log({hasFlippedCard, firstCard})
     }else {
         hasFlippedCard = false
         secondCard = this
 
         checkForMatch()
 
-        // console.log(firstCard.dataset.emoji)
-        // console.log(secondCard.data.emoji)
+        console.log(firstCard.dataset.emoji)
+        console.log(secondCard.data.emoji)
 
 }
 }
@@ -63,5 +64,17 @@ function unflipCards(){
     
 
 }
+function resetBoard () {
+    [hasFlippedCard, lockBoard] =  [false, false]
+    [firstCard, secondCard] = [null, null]
+}
+
+(function shuffle() {
+    cards.forEach(card => {
+        let randomPos = Math.floor(Math.random() * 6)
+        card.style.order = randomPos
+    })
+
+})()
 cards.forEach(card => card.addEventListener("click", flipCard))
 
